@@ -98,6 +98,19 @@ class FolderController extends abstractController {
       }
     }
   );
+
+  // delete sub folder
+  public deleteSubFolderController = this.assyncWrapper.wrap(
+    async (req: Request, res: Response) => {
+      const data = await this.folderService.deleteSubFolderService(req);
+
+      if (data.success) {
+        res.status(200).json(data);
+      } else {
+        res.status(400).json(data);
+      }
+    }
+  );
 }
 
 export default FolderController;

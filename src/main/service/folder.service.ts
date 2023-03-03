@@ -156,6 +156,40 @@ class FolderService extends AbstractServices {
       message: "Cannot folder delete at this moment",
     };
   };
+
+  // delete sub folder service
+  public deleteSubFolderService = async (req: Request) => {
+    const { subFolderId } = req.params;
+
+    const checkChildFolderWithSubId = await this.db("child_folders AS cf")
+      .select("cf.sub_folder_id", "sf.folder_id")
+      .join("sub_folders AS sf", "cf.sub_folder_id", "sf.sub_folder_id")
+      .where("sf.sub_folder_id", subFolderId);
+
+    if (checkChildFolderWithSubId.length) {
+      const childFolderRes = await this.db("child_folders")
+        .where("sub_folder_id", checkChildFolderWithSubId[0].sub_folder_id)
+        .del();
+    }
+
+    const res = await this.db("sub_folders")
+      .where("sub_folder_id", subFolderId)
+      .del();
+
+    console.log(res);
+
+    if (res) {
+      return {
+        success: true,
+        message: "Successfully sub folder deleted",
+      };
+    }
+
+    return {
+      success: false,
+      message: "Cannot sub folder delete at this moment",
+    };
+  };
 }
 
 export default FolderService;
