@@ -46,6 +46,34 @@ class FolderService extends AbstractServices {
       };
     });
   };
+
+  // create child folder service
+  public createChildFolderService = async (req: Request) => {
+    return await this.db.transaction(async (trx) => {
+      const { sub_folder_id, child_folder_name } = req.body;
+
+      const subFolderRes = await trx("sub_folders").insert({
+        sub_folder_name: child_folder_name,
+      });
+
+      const childFolderRes = await trx("child_folders").insert({
+        child_folder_name,
+        sub_folder_id,
+      });
+
+      if (childFolderRes.length) {
+        return {
+          success: true,
+          message: "Successfully folder created",
+        };
+      }
+
+      return {
+        success: false,
+        message: "Cannot create folder at this moment",
+      };
+    });
+  };
 }
 
 export default FolderService;
