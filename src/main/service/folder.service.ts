@@ -122,6 +122,40 @@ class FolderService extends AbstractServices {
       data,
     };
   };
+
+  // delete a folder service
+  public deleteFolderService = async (req: Request) => {
+    const { folderId } = req.params;
+
+    const checkChildFolder = await this.db("child_folders AS cf")
+      .select("cf.sub_folder_id", "sf.folder_id")
+      .join("sub_folders AS sf", "cf.sub_folder_id", "sf.sub_folder_id")
+      .where("sf.folder_id", folderId);
+
+    if (checkChildFolder.length) {
+      const childFolderRes = await this.db("child_folders")
+        .where("sub_folder_id", checkChildFolder[0].sub_folder_id)
+        .del();
+    }
+
+    const subFolderRes = await this.db("sub_folders")
+      .where("folder_id", folderId)
+      .del();
+
+    const res = await this.db("folders").where("folder_id", folderId).del();
+
+    if (res) {
+      return {
+        success: true,
+        message: "Successfully folder deleted",
+      };
+    }
+
+    return {
+      success: false,
+      message: "Cannot folder delete at this moment",
+    };
+  };
 }
 
 export default FolderService;
