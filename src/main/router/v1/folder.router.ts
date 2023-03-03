@@ -33,6 +33,11 @@ class FolderRouter extends AbstractRouter {
         this.InputValidator.childFolderCreateInputValidator(),
         this.FolderController.createChildFolderController
       );
+
+    // get all folders
+    this.routers
+      .route("/get/all/folder")
+      .get(this.FolderController.getAllFolderController);
   }
 }
 

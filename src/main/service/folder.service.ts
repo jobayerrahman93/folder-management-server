@@ -74,6 +74,16 @@ class FolderService extends AbstractServices {
       };
     });
   };
+
+  // get all folder service
+  public getAllFolderService = async (req: Request) => {
+    const data = await this.db("folders").select("folder_id", "folder_name");
+
+    return {
+      success: true,
+      data,
+    };
+  };
 }
 
 export default FolderService;
