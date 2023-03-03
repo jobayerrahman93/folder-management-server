@@ -1,4 +1,4 @@
-import { body } from "express-validator";
+import { body, param } from "express-validator";
 
 class InputValidator {
   constructor() {}
@@ -19,6 +19,9 @@ class InputValidator {
       body("sub_folder_id", "Provide sub folder id").exists(),
       body("child_folder_name", "Provide child folder name").exists(),
     ];
+  }
+  public singleParamInputValidator(id: string, message: string) {
+    return [param(id, message).exists()];
   }
 }
 

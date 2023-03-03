@@ -38,6 +38,17 @@ class FolderRouter extends AbstractRouter {
     this.routers
       .route("/get/all/folder")
       .get(this.FolderController.getAllFolderController);
+
+    // get all sub folders
+    this.routers
+      .route("/get/all/sub-folder/by/:parentId")
+      .get(
+        this.InputValidator.singleParamInputValidator(
+          "parentId",
+          "Provide parent id"
+        ),
+        this.FolderController.getAllSubFolderController
+      );
   }
 }
 

@@ -60,6 +60,19 @@ class FolderController extends abstractController {
       }
     }
   );
+
+  // get all sub folder
+  public getAllSubFolderController = this.assyncWrapper.wrap(
+    async (req: Request, res: Response) => {
+      const data = await this.folderService.getAllSubFolderService(req);
+
+      if (data.success) {
+        res.status(200).json(data);
+      } else {
+        res.status(400).json(data);
+      }
+    }
+  );
 }
 
 export default FolderController;
