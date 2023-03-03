@@ -17,6 +17,14 @@ class FolderRouter extends AbstractRouter {
         this.InputValidator.folderCreateInputValidator(),
         this.FolderController.createFolderController
       );
+
+    // create sub folder
+    this.routers
+      .route("/create/sub-folder")
+      .post(
+        this.InputValidator.subFolderCreateInputValidator(),
+        this.FolderController.createSubFolderController
+      );
   }
 }
 

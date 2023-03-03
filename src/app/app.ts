@@ -37,7 +37,7 @@ class App {
   // init routers
   private initRouters() {
     this.app.get("/", (_req: Request, res: Response) => {
-      res.send("Authentication server is running...");
+      res.send("Folder management server is running...");
     });
   }
 
