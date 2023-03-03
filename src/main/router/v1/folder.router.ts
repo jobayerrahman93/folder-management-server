@@ -9,7 +9,15 @@ class FolderRouter extends AbstractRouter {
     this.callRouter();
   }
 
-  private callRouter() {}
+  private callRouter() {
+    // create folder
+    this.routers
+      .route("/create")
+      .post(
+        this.InputValidator.folderCreateInputValidator(),
+        this.FolderController.createFolderController
+      );
+  }
 }
 
 export default FolderRouter;
