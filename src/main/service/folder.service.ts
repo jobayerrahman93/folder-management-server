@@ -176,8 +176,6 @@ class FolderService extends AbstractServices {
       .where("sub_folder_id", subFolderId)
       .del();
 
-    console.log(res);
-
     if (res) {
       return {
         success: true,
@@ -188,6 +186,27 @@ class FolderService extends AbstractServices {
     return {
       success: false,
       message: "Cannot sub folder delete at this moment",
+    };
+  };
+
+  // delete child folder service
+  public deleteChildFolderService = async (req: Request) => {
+    const { childFolderId } = req.params;
+
+    const res = await this.db("child_folders")
+      .where("child_folder_id", childFolderId)
+      .del();
+
+    if (res) {
+      return {
+        success: true,
+        message: "Successfully child folder deleted",
+      };
+    }
+
+    return {
+      success: false,
+      message: "Cannot child folder delete at this moment",
     };
   };
 }

@@ -82,6 +82,17 @@ class FolderRouter extends AbstractRouter {
         ),
         this.FolderController.deleteSubFolderController
       );
+
+    // delete a child folder
+    this.routers
+      .route("/delete/child-folder-by/:childFolderId")
+      .delete(
+        this.InputValidator.singleParamInputValidator(
+          "childFolderId",
+          "Provide child folder id"
+        ),
+        this.FolderController.deleteChildFolderController
+      );
   }
 }
 
